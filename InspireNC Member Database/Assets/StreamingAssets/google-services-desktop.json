@@ -1,0 +1,37 @@
+{
+  "client": [
+    {
+      "services": {
+        "appinvite_service": {
+          "status": 1
+        }, 
+        "analytics_service": {
+          "status": 0
+        }
+      }, 
+      "oauth_client": [
+        {
+          "client_id": "437539484986-ovqblsltlold2qnihgu4cp1rvo5sblea.apps.googleusercontent.com"
+        }
+      ], 
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnThWPCf_OCaRziRLXCWtoFhcJMkQhDCI"
+        }
+      ], 
+      "client_info": {
+        "mobilesdk_app_id": "1:437539484986:ios:cbee649f00fde2f4", 
+        "android_client_info": {
+          "package_name": "com.inspirenc.memberdatabase"
+        }
+      }
+    }
+  ], 
+  "configuration_version": "1", 
+  "project_info": {
+    "storage_bucket": "inspirenc-database.appspot.com", 
+    "project_id": "inspirenc-database", 
+    "firebase_url": "https://inspirenc-database.firebaseio.com", 
+    "project_number": "437539484986"
+  }
+}
