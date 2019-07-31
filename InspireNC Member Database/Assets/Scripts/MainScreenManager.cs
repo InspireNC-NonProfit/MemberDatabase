@@ -159,7 +159,6 @@ public class MainScreenManager : MonoBehaviour
             yield return new WaitUntil(() => done == true);
             done = false;
         }
-
         DataSnapshot users = null;
 
         firebaseManager.getFirebaseReference("Users/Public Data").GetValueAsync().ContinueWith(task => 

@@ -10,6 +10,7 @@ TagManager:
   - Phone Number
   - Member Info Screen
   - Main Screen
+  - Password
   layers:
   - Default
   - TransparentFX

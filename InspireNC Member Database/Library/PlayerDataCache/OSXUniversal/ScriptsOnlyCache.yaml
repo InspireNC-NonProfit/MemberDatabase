@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - FirebaseManager
+    - LoadingAnimation
     - LoginManager
     - MainScreenManager
     - SignUpManager
@@ -13,8 +14,6 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
-    UnityEditor.TestRunner.dll:
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -54,53 +53,55 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9474}
-    - Class: 114
-      Script: {instanceID: 9476}
-    - Class: 114
       Script: {instanceID: 9478}
+    - Class: 114
+      Script: {instanceID: 9480}
     - Class: 114
       Script: {instanceID: 9482}
     - Class: 114
-      Script: {instanceID: 9488}
+      Script: {instanceID: 9486}
     - Class: 114
-      Script: {instanceID: 9490}
+      Script: {instanceID: 9492}
     - Class: 114
-      Script: {instanceID: 9496}
+      Script: {instanceID: 9494}
     - Class: 114
-      Script: {instanceID: 9504}
+      Script: {instanceID: 9500}
     - Class: 114
-      Script: {instanceID: 9520}
-    - Class: 114
-      Script: {instanceID: 9522}
+      Script: {instanceID: 9508}
     - Class: 114
       Script: {instanceID: 9524}
     - Class: 114
-      Script: {instanceID: 9532}
+      Script: {instanceID: 9526}
+    - Class: 114
+      Script: {instanceID: 9528}
     - Class: 114
       Script: {instanceID: 9536}
     - Class: 114
-      Script: {instanceID: 9550}
+      Script: {instanceID: 9540}
     - Class: 114
-      Script: {instanceID: 9732}
+      Script: {instanceID: 9554}
     - Class: 114
-      Script: {instanceID: 9818}
+      Script: {instanceID: 9736}
     - Class: 114
-      Script: {instanceID: 9856}
+      Script: {instanceID: 9824}
     - Class: 114
-      Script: {instanceID: 9868}
+      Script: {instanceID: 9862}
     - Class: 114
-      Script: {instanceID: 10058}
+      Script: {instanceID: 9872}
     - Class: 114
-      Script: {instanceID: 10062}
+      Script: {instanceID: 10064}
     - Class: 114
-      Script: {instanceID: 10174}
+      Script: {instanceID: 10068}
     - Class: 114
-      Script: {instanceID: 10184}
+      Script: {instanceID: 10084}
     - Class: 114
-      Script: {instanceID: 10300}
+      Script: {instanceID: 10186}
     - Class: 114
-      Script: {instanceID: 10514}
+      Script: {instanceID: 10196}
+    - Class: 114
+      Script: {instanceID: 10312}
+    - Class: 114
+      Script: {instanceID: 10526}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -352,6 +353,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_InputField
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: UnityEngine.Advertisements.dll
+    namespaceName: UnityEngine.Advertisements
+    className: CallbackExecutor
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: UnityEngine.Advertisements.dll
+    namespaceName: UnityEngine.Advertisements.Editor
+    className: Placeholder
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -666,6 +679,12 @@ ScriptsOnlyBuild:
     className: SignUpManager
   - hash:
       serializedVersion: 2
+      Hash: 037b8b117e31194c89047a60deaa14a9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LoadingAnimation
+  - hash:
+      serializedVersion: 2
       Hash: 3f8d7b92a6be3c715e55d5cfa7cc8384
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -793,4 +812,4 @@ ScriptsOnlyBuild:
   platform: 2
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: /Users/abhinavpratap/Desktop/InspireNC.app
+  playerPath: /Users/abhinavpratap/Desktop/InspireNC macOS.app

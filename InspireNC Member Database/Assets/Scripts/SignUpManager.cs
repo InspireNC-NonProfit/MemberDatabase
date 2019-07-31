@@ -6,6 +6,7 @@ using TMPro;
 using Firebase.Database;
 using System.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 public class SignUpManager : MonoBehaviour
 {
     private int screenID = 0;
@@ -26,6 +27,8 @@ public class SignUpManager : MonoBehaviour
     
     [SerializeField]
     private GameObject programsContent;
+
+    private 
     GameObject currentPage;
     PublicUserData publicUserData = null;
     PrivateUserData privateUserData = null;
@@ -304,6 +307,17 @@ public class SignUpManager : MonoBehaviour
             update = !checkInputs();
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            {
+                if (EventSystem.current.currentSelectedGameObject != null)
+                {
+                    Selectable selectable = EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+                    if (selectable != null)
+                        selectable.Select();
+                }
+            }
+        }
     }
 
     bool CheckPassword(string confirm)

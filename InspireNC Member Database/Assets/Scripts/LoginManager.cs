@@ -5,6 +5,7 @@ using TMPro;
 using Firebase.Database;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class LoginManager : MonoBehaviour
 {
@@ -83,6 +84,21 @@ public class LoginManager : MonoBehaviour
     {
         if (validatePhoneNumber() && validateEmail())
             StartCoroutine(SaveProfile());
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            {
+                if (EventSystem.current.currentSelectedGameObject != null)
+                {
+                    Selectable selectable = EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+                    if (selectable != null)
+                        selectable.Select();
+                }
+            }
+        }
     }
     
     IEnumerator resendEmail()
