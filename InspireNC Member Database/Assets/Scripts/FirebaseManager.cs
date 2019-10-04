@@ -17,12 +17,6 @@ public class FirebaseManager : MonoBehaviour
     [SerializeField]
     private GameObject loadingScreen, messageScreen, mainScreen;
 
-    [SerializeField]
-    private GameObject programCheckbox;
-
-    [SerializeField]
-    private GameObject programsContent;
-
     private float errorTime = 0f;
 
     void Awake()
@@ -77,7 +71,7 @@ public class FirebaseManager : MonoBehaviour
 
         enableLoadingScreen();
         mainScreen.SetActive(false);
-        auth.SignInWithEmailAndPasswordAsync("inspirenc@inspirenc.us", "bUfFoONeRy").ContinueWith(task => 
+        auth.SignInWithEmailAndPasswordAsync("default@inspirenc.us", "bUfFoONeRy").ContinueWith(task => 
         {
             if (task.IsFaulted || task.IsCanceled)
             {
