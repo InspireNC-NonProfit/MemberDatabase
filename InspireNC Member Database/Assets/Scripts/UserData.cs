@@ -30,8 +30,10 @@ public class PrivateUserData
     
     public string personalEmail, address;
     public string parent1name, parent1email, parent1number, parent2name, parent2email, parent2number, phoneNumber; 
+    public string gender;
+    public int age;
 
-    public PrivateUserData(string personalEmail, string address, string parent1name, string parent1email, string parent1number, string parent2name, string parent2email, string parent2number, string phoneNumber)
+    public PrivateUserData(string personalEmail, string address, string parent1name, string parent1email, string parent1number, string parent2name, string parent2email, string parent2number, string phoneNumber, string gender, int age)
     {
         this.personalEmail = personalEmail;
         this.address = address;
@@ -42,6 +44,8 @@ public class PrivateUserData
         this.parent2email = parent2email;
         this.parent2number = parent2number;
         this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.age = age;
     }
 
     public PrivateUserData() {}
@@ -50,6 +54,7 @@ public class PrivateUserData
 [System.Serializable]
 public class Attendance
 {
+    /* ======================= Attendance ======================= */
     public double totalHours = 0, averageHours = 0;
     public int daysAttended = 0;
     public bool signedIn = false;

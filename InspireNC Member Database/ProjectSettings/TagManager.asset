@@ -11,6 +11,7 @@ TagManager:
   - Member Info Screen
   - Main Screen
   - Password
+  - Gender
   layers:
   - Default
   - TransparentFX

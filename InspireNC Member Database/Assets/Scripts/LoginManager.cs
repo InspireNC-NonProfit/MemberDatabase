@@ -6,6 +6,7 @@ using Firebase.Database;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Net.Mail;
 
 public class LoginManager : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class LoginManager : MonoBehaviour
     private GameObject unverfiedPage, editProfilePage, memberInfoPage, loginPage;
 
     [SerializeField]
-    private TMP_InputField editProfileNumber, grade, school, address, parent1name, parent1email, parent1number, parent2name, parent2email, parent2number, editProfileEmail;
+    private TMP_InputField editProfileNumber, grade, school, address, parent1name, parent1email, parent1number, parent2name, parent2email, parent2number, editProfileEmail, age, gender;
 
     [SerializeField]
     private GameObject programTogglesContent;
@@ -82,7 +83,7 @@ public class LoginManager : MonoBehaviour
    
    public void SaveProfileButton()
     {
-        if (validatePhoneNumber() && validateEmail())
+        if (validatePhoneNumber() && validateEmail() && validateGender() )
             StartCoroutine(SaveProfile());
     }
 
@@ -282,6 +283,19 @@ public class LoginManager : MonoBehaviour
         parent2email.text = privateData.parent2email;
         parent2number.text = privateData.parent2number;
         editProfileEmail.text = privateData.personalEmail;
+        age.text = privateData.age.ToString();
+        if (privateData.gender == "M")
+        {
+            gender.text = "Male";
+        }
+        else if (privateData.gender == "F")
+        {
+            gender.text = "Female";
+        }
+        else if (privateData.gender == "O")
+        {
+            gender.text = "Other";
+        }
 
         firebaseManager.getFirebaseReference("Programs").GetValueAsync().ContinueWith(task => 
         {
@@ -349,6 +363,9 @@ public class LoginManager : MonoBehaviour
         privateData.parent2email = parent2email.text;
         privateData.parent2number = parent2number.text;
         privateData.personalEmail = editProfileEmail.text;
+        privateData.age = Int32.Parse(age.text);
+        privateData.gender = gender.text.Substring(0,1).ToUpper();
+
         foreach (Toggle toggle in gameObject.GetComponentsInChildren<Toggle>())
         {
             if (toggle.isOn)
@@ -453,7 +470,7 @@ public class LoginManager : MonoBehaviour
         loginPage.SetActive(false);
         memberInfoPage.SetActive(true);
         email.text = "Email: ";
-        phoneNumber.text = "(919) 000-0000";
+        phoneNumber.text = "(000) 000-0000";
         memberName.text = "Name";
         classification.text = "Member";
         daysAttended.text = "Days Attended: ";
@@ -491,7 +508,11 @@ public class LoginManager : MonoBehaviour
         {
             email = emailObject.GetComponentInChildren<TMP_InputField>().text;
 
-            if (!(email.Contains("@") && email.IndexOf('@') > 0 && email.Contains(".") && email.IndexOf(".") > 1))
+            try 
+            {
+                string emailAddress = new MailAddress(email).Address;
+            } 
+            catch(FormatException) 
             {
                 firebaseManager.setErrorMessage("Invalid Email");
                 validated = false;
@@ -521,7 +542,7 @@ public class LoginManager : MonoBehaviour
 
             if (!(number.Length == 10))
             {
-                firebaseManager.setErrorMessage("Invalid Email");
+                firebaseManager.setErrorMessage("Invalid Phone Number");
                 validated = false;
             }
         }
@@ -536,5 +557,38 @@ public class LoginManager : MonoBehaviour
         }
 
         return validated;
+    }
+
+    bool validateGender()
+    {
+        if ((gender.text.ToUpper() == "MALE" || gender.text.ToUpper() == "FEMALE" || gender.text.ToUpper() == "OTHER"))
+        {
+            firebaseManager.setErrorMessage("");
+            return true;
+        }
+            
+
+        firebaseManager.setErrorMessage("Invalid Gender");
+        return false;
+    }
+
+    public void ontext(TMP_InputField input)
+    {
+        string inputString = input.text;
+
+        if (inputString.Length == 1 && inputString.Contains("\\"))
+        {
+            input.text = "";
+        }
+        else if (inputString.Length > 1 && input.caretPosition == inputString.Length-1 && inputString.Contains("\\"))
+        {
+            input.text = inputString.Substring(0, inputString.IndexOf("\\")) + inputString.Substring(inputString.IndexOf("\\") + 1);
+        }
+        else if (inputString.Contains("\\"))
+        {
+            inputString = inputString.Substring(0, inputString.IndexOf("\\")) + inputString.Substring(inputString.IndexOf("\\") + 1);
+            input.text = inputString;
+            input.caretPosition = input.caretPosition - 1; 
+        }
     }
 }

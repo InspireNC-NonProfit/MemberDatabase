@@ -30,8 +30,9 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Toggle
+    - UnityEngine.UI.ToggleGroup
   sceneClasses:
-    Assets/Scenes/SampleScene.unity:
+    Assets/Scenes/Member Screen.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -48,62 +49,62 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
-    - Class: 89
-      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9478}
+      Script: {instanceID: 9474}
     - Class: 114
-      Script: {instanceID: 9480}
+      Script: {instanceID: 9476}
+    - Class: 114
+      Script: {instanceID: 9478}
     - Class: 114
       Script: {instanceID: 9482}
     - Class: 114
-      Script: {instanceID: 9486}
+      Script: {instanceID: 9488}
     - Class: 114
-      Script: {instanceID: 9492}
+      Script: {instanceID: 9490}
     - Class: 114
-      Script: {instanceID: 9494}
+      Script: {instanceID: 9496}
     - Class: 114
-      Script: {instanceID: 9500}
+      Script: {instanceID: 9504}
     - Class: 114
-      Script: {instanceID: 9508}
+      Script: {instanceID: 9520}
+    - Class: 114
+      Script: {instanceID: 9522}
     - Class: 114
       Script: {instanceID: 9524}
     - Class: 114
-      Script: {instanceID: 9526}
-    - Class: 114
-      Script: {instanceID: 9528}
+      Script: {instanceID: 9532}
     - Class: 114
       Script: {instanceID: 9536}
     - Class: 114
-      Script: {instanceID: 9540}
+      Script: {instanceID: 9538}
     - Class: 114
-      Script: {instanceID: 9554}
+      Script: {instanceID: 9550}
     - Class: 114
-      Script: {instanceID: 9736}
+      Script: {instanceID: 9732}
     - Class: 114
-      Script: {instanceID: 9824}
+      Script: {instanceID: 9820}
     - Class: 114
-      Script: {instanceID: 9862}
+      Script: {instanceID: 9858}
     - Class: 114
-      Script: {instanceID: 9872}
+      Script: {instanceID: 9868}
     - Class: 114
-      Script: {instanceID: 10064}
+      Script: {instanceID: 10074}
     - Class: 114
-      Script: {instanceID: 10068}
+      Script: {instanceID: 10078}
     - Class: 114
-      Script: {instanceID: 10084}
-    - Class: 114
-      Script: {instanceID: 10186}
+      Script: {instanceID: 10094}
     - Class: 114
       Script: {instanceID: 10196}
     - Class: 114
-      Script: {instanceID: 10312}
+      Script: {instanceID: 10206}
     - Class: 114
-      Script: {instanceID: 10526}
+      Script: {instanceID: 10316}
+    - Class: 114
+      Script: {instanceID: 10530}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -567,7 +568,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: c207b15b96b362c9e8f91771d5ba285f
+      Hash: 3af305f331e4b27e9284452d142c6731
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LoginManager
@@ -615,7 +616,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 4c59d23c54894aa0edff56eee3e3565c
+      Hash: 6d1fd77bd0f4e78a3688a59a7f5aa2e5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainScreenManager
@@ -657,13 +658,13 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
-      Hash: 314bdff2709caaf0c79a20c90f52d457
+      Hash: 9aafef0aa1bbe8135d2ede3d9f30869b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FirebaseManager
   - hash:
       serializedVersion: 2
-      Hash: 02a0ab702a42def2ab195744033cf623
+      Hash: b726a9a503ba091e8eebc9247c06cd7d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SignUpManager
@@ -801,6 +802,5 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 19
   scenePathNames:
-  - Assets/Scenes/SampleScene.unity
-  playerPath: /Users/abhinavpratap/Desktop/InspireNC Windows/InspireNC Windows/InspireNC
-    Member Database.exe
+  - Assets/Scenes/Member Screen.unity
+  playerPath: /Users/abhinavpratap/Desktop/InspireNC_Windows/InspireNC Member Database.exe

@@ -7,9 +7,11 @@ using Firebase.Database;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Net.Mail;
 public class SignUpManager : MonoBehaviour
 {
     private int screenID = 0;
+    private List<string> emails = new List<string>();
     private FirebaseManager firebaseManager;
 
     [SerializeField]
@@ -34,7 +36,13 @@ public class SignUpManager : MonoBehaviour
     PrivateUserData privateUserData = null;
 
     [SerializeField]
-    private TMP_InputField inspirencEmail, school, memberName, phoneNumber, grade, personalEmail, address, parent1name, parent1email, parent1number, parent2name, parent2email, parent2number;
+    private ToggleGroup genders;
+    
+    [SerializeField]
+    private GameObject homeButton;
+
+    [SerializeField]
+    private TMP_InputField inspirencEmail, school, memberName, phoneNumber, grade, age, personalEmail, address, parent1name, parent1email, parent1number, parent2name, parent2email, parent2number;
     List<string> programs = new List<string>();
 /* ============================================= */
     bool firstTimeEntry = true;
@@ -56,6 +64,7 @@ public class SignUpManager : MonoBehaviour
 
         if (screenID == 5)
         {
+            homeButton.SetActive(false);
             AddProgramsToList();
             StartCoroutine(PushUserToFirebase());
         }
@@ -66,6 +75,7 @@ public class SignUpManager : MonoBehaviour
         }
         else if (screenID == 0)
         {
+            
             if (CheckPassword("confirm") == false)
             {
                 return;
@@ -152,8 +162,9 @@ public class SignUpManager : MonoBehaviour
         Firebase.Auth.FirebaseUser newUser = null;
         bool done = false;
         string errorMessage = "";
+
         publicUserData = new PublicUserData(programs, inspirencEmail.text, school.text, memberName.text, "Member", Int32.Parse(grade.text));
-        privateUserData = new PrivateUserData(personalEmail.text, address.text, parent1name.text, parent1email.text, parent1number.text, parent2name.text, parent2email.text, parent2number.text, phoneNumber.text);
+        privateUserData = new PrivateUserData(personalEmail.text, address.text, parent1name.text, parent1email.text, parent1number.text, parent2name.text, parent2email.text, parent2number.text, phoneNumber.text, getCheckedGender(), Int32.Parse(age.text));
 
         firebaseManager.auth.CreateUserWithEmailAndPasswordAsync(publicUserData.inspirencEmail, passwordInput.text.ToString()).ContinueWith(task =>
         {
@@ -256,6 +267,22 @@ public class SignUpManager : MonoBehaviour
         yield return new WaitUntil(() => done == true);
         done = false;
 
+        firebaseManager.reference.Child("Email List").Child(inspirencEmail.text.Substring(0, inspirencEmail.text.IndexOf("@"))).SetValueAsync(inspirencEmail.text).ContinueWith(task =>
+        {
+           if (task.IsCanceled || task.IsFaulted)
+            {
+                return;
+            }
+
+            if (task.IsCompleted)
+            {
+                done = true;
+            }
+        });
+
+        yield return new WaitUntil(() => done == true);
+        done = false;
+
         firebaseManager.disableLoadingScreen();
     }
 
@@ -293,11 +320,55 @@ public class SignUpManager : MonoBehaviour
         gameObject.SetActive(false);
         mainScreen.SetActive(true);
         mainScreen.GetComponent<MainScreenManager>().Start();
+        homeButton.SetActive(true);
     }
 
     public void Awake()
     {
         firebaseManager = GameObject.FindGameObjectWithTag("FirebaseManager").GetComponent<FirebaseManager>();
+    }
+
+    public void Start()
+    {
+        StartCoroutine(getEmailListing());
+    }
+
+    public IEnumerator getEmailListing()
+    {
+        firebaseManager.enableLoadingScreen();
+
+        bool done = false, error = false;
+        firebaseManager.getFirebaseReference("Email List").GetValueAsync().ContinueWith(task => 
+        {
+            if (task.IsCompleted && !task.IsCanceled && !task.IsFaulted)
+            {
+                DataSnapshot listing = task.Result;
+                if (listing.HasChildren)
+                {
+                    foreach (DataSnapshot snapshot in listing.Children)
+                    {
+                        emails.Add((string)snapshot.Value);
+                    }
+                }
+            }
+            else
+            {
+                error = true;
+            }
+
+            done = true;
+        });
+
+        yield return new WaitUntil(() => done == true);
+
+        if (error == true)
+        {
+            firebaseManager.setErrorMessage("Unable to reach servers!");
+            yield return new WaitForSeconds(3);
+            Application.Quit();
+        }
+
+        firebaseManager.disableLoadingScreen();
     }
 
     public void Update()
@@ -384,7 +455,20 @@ public class SignUpManager : MonoBehaviour
 
     bool validateInspirencEmail(string email)
     {
-        if (email.Contains("@inspirenc.us") && email.IndexOf('@') > 0)
+        if (emails.Count != 0)
+        {
+            foreach (string emailString in emails)
+            {
+                if (email == emailString)
+                {
+                    firebaseManager.setErrorMessage("Email already exists!");
+                    inspirencEmail.text = "";
+                    return false;
+                }
+            }
+        }
+    
+        if (email.ToLower().Contains("@inspirenc.us") && email.IndexOf('@') > 0 && email.Split('@')[1] == "inspirenc.us")
         {
             firebaseManager.setErrorMessage("");
             return true;
@@ -398,16 +482,18 @@ public class SignUpManager : MonoBehaviour
 
     bool validateEmail(string email)
     {
-        if (email.Contains("@") && email.IndexOf('@') > 0 && email.Contains(".") && email.IndexOf(".") > 1)
+        try 
         {
-            firebaseManager.setErrorMessage("");
-            return true;
-        }
-        else
+            string emailAddress = new MailAddress(email).Address;
+        } 
+        catch(FormatException) 
         {
             firebaseManager.setErrorMessage("Invalid Email");
             return false;
         }
+
+        firebaseManager.setErrorMessage("");
+        return true;
     }
 
     bool validatePhoneNumber(string phoneNumber)
@@ -458,6 +544,40 @@ public class SignUpManager : MonoBehaviour
             {
                 programs.Add(programToggle.gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
             }
+        }
+    }
+
+    string  getCheckedGender()
+    {
+        string gender = null;
+        foreach (Toggle toggle in genders.GetComponentsInChildren<Toggle>())
+        {
+            if (toggle.isOn)
+            {
+                gender = toggle.GetComponentInChildren<TextMeshProUGUI>().text.Substring(0,1);
+            }
+        }
+
+        return gender;
+    }
+
+    public void ontext(TMP_InputField input)
+    {
+        string inputString = input.text;
+
+        if (inputString.Length == 1 && inputString.Contains("\\"))
+        {
+            input.text = "";
+        }
+        else if (inputString.Length > 1 && input.caretPosition == inputString.Length-1 && inputString.Contains("\\"))
+        {
+            input.text = inputString.Substring(0, inputString.IndexOf("\\")) + inputString.Substring(inputString.IndexOf("\\") + 1);
+        }
+        else if (inputString.Contains("\\"))
+        {
+            inputString = inputString.Substring(0, inputString.IndexOf("\\")) + inputString.Substring(inputString.IndexOf("\\") + 1);
+            input.text = inputString;
+            input.caretPosition = input.caretPosition - 1; 
         }
     }
 }

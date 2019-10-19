@@ -162,6 +162,65 @@ Support
 
 Release Notes
 -------------
+### 6.6.0
+  - Overview
+    - Updated dependencies, fixed issues in Database.
+  - Changes
+    - Database (Desktop): Fixed a crash that could occur when trying to keep a
+      location in the database synced when you do not have permission.
+    - Database (Desktop): Queries on locations in the database with query rules
+      now function properly, instead of always returning "Permission denied".
+    - Database (Desktop): Fixed the map-to-vector conversion when firing events
+      that have maps containing enitrely integer keys.
+
+### 6.5.0
+  - Overview
+    - Updated dependencies, improved logging for Auth and Database, and fixed
+      the freeze in the editor.
+  - Changes
+    - General: The instance of FirebaseApp, FirebaseAuth, FirebaseDatabase,
+      FirebaseFunctions, FirebaseInstanceId and FirebaseStorage will be kept
+      alive after creation until explicitly disposed.
+    - Auth (Linux): Improved error logging if libsecret (required for login
+      persistence) is not installed on Linux.
+    - Database: The database now supports setting the log level independently of
+      the system level logger.
+    - Auth/Database (Desktop): Fixed the freeze when playing in the editor for
+      the more than once or when closing the editor, when keeping a static
+      reference to either FirebaseAuth or FirebaseDatabase instances.
+
+### 6.4.0
+  - Overview
+    - Updated dependencies, improved error handling in the iOS build logic,
+      improved error handling with deleted objects, fixed an issue with Auth
+      persistence, and fixed a crash in Database.
+  - Changes
+    - General: Added more underlying null checks when accessing objects that can
+      potentially be deleted, throwing exceptions instead of crashing.
+    - General (iOS): Handle malformed Info.plist files when patching Xcode
+      projects.
+    - Auth (Desktop): Fixed an issue with updated user info not being persisted.
+    - Database (Desktop): Fixed a crash with saving a ServerTimestamp during
+      a transaction.
+
+### 6.3.0
+  - Overview
+    - Auth (iOS): Fixed an exception in Firebase.AuthVerifyPhoneNumber.
+  - Changes
+    - General (Editor): Fixed spurious errors about missing google-services.json
+      file.
+    - General (iOS/Android): Fixed a bug that allows custom FirebaseApp
+      instances to be created after the app has been restarted
+    - Auth (Desktop): Changed destruction behavior. Instead of waiting for all
+      async operations to finish, now Auth will cancel all async operations and
+      quit. For callbacks that are already running, this will protect against
+      cases where auth instances might not exist anymore.
+    - Auth (iOS): Fixed an exception in PhoneAuthProvider.verifyPhoneNumber.
+    - Auth (iOS): Stopped Auth from hanging on destruction if any local tasks
+      remain in scope.
+    - Database (Desktop): Fixed an issue that could cause a crash when updating
+      the descendant of a location with a listener attached.
+
 ### 6.2.2
   - Overview
     - Bug fixes.

@@ -32,6 +32,12 @@ public class MainScreenManager : MonoBehaviour
 
     private List<GameObject> userList = new List<GameObject>();
     
+    [SerializeField]
+    private GameObject doneListObject;
+    
+    [SerializeField]
+    private TMP_InputField doneListInput;
+    
     public void Awake()
     {
         firebaseManager = GameObject.FindGameObjectWithTag("FirebaseManager").GetComponent<FirebaseManager>();
@@ -76,6 +82,7 @@ public class MainScreenManager : MonoBehaviour
     public void SignUpButton()
     {
         signUpScreen.SetActive(true);
+        signUpScreen.GetComponent<SignUpManager>().Start();
         disableThisScreen();
     }
 
@@ -99,8 +106,19 @@ public class MainScreenManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(SignOut());
+            showDoneList();
         }
+    }
+
+    public void DoneButton()
+    {
+        if (!string.IsNullOrWhiteSpace(doneListInput.text))
+            StartCoroutine(SignOut());
+    }
+
+    void showDoneList()
+    {
+        doneListObject.SetActive(true);
     }
 
     void reset()
@@ -125,6 +143,8 @@ public class MainScreenManager : MonoBehaviour
         messageScreen.SetActive(true);
         messageScreen.GetComponentInChildren<TextMeshProUGUI>().text = "";
         messageScreen.SetActive(false);
+        doneListObject.SetActive(false);
+        doneListInput.text = "";
         foreach (Transform program in programContentGameObject.transform)
         {
             Destroy(program.gameObject);
@@ -323,6 +343,9 @@ public class MainScreenManager : MonoBehaviour
         bool done = false;
         firebaseManager.enableLoadingScreen();
 
+        string doneListText = doneListInput.text;
+        doneListObject.SetActive(false);
+
         firebaseManager.getFirebaseReference("Users/Public Data").Child(memberInfoObject.memberName).Child(memberInfoObject.userID).Child("attendance").Child("signedIn").SetValueAsync(false).ContinueWith(task => 
         {
             if (task.IsCanceled || task.IsCanceled)
@@ -393,6 +416,21 @@ public class MainScreenManager : MonoBehaviour
         attendanceData.averageHours = attendanceData.totalHours/attendanceData.daysAttended;
 
         firebaseManager.reference.Child("Users/Public Data").Child(memberInfoObject.memberName).Child(memberInfoObject.userID).Child("attendance").SetRawJsonValueAsync(JsonUtility.ToJson(attendanceData)).ContinueWith(task => 
+        {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                return;
+            }
+            if (task.IsCompleted)
+            {
+                done = true;
+            }
+        });
+        
+        yield return new WaitUntil(() => done == true);
+        done = false;
+
+        firebaseManager.reference.Child("Users/Public Data").Child(memberInfoObject.memberName).Child(memberInfoObject.userID).Child("attendance").Child("doneList").Child(lastSignOutTime.Month + "-" + lastSignOutTime.Day + "-" + lastSignOutTime.Year).SetValueAsync(doneListText).ContinueWith(task => 
         {
             if (task.IsCanceled || task.IsFaulted)
             {

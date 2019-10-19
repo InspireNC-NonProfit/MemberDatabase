@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Admin Console.unity
+- path: Assets/Scenes/Member Screen.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
