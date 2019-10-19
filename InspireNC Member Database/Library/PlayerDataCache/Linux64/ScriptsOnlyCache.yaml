@@ -800,7 +800,13 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FirebaseTemp
   platform: 24
   scenePathNames:
   - Assets/Scenes/Member Screen.unity
-  playerPath: /Users/abhinavpratap/Desktop/InspireNC_Linux.x86_64
+  playerPath: /Users/abhinavpratap/Desktop/InspireNC Linux/InspireNC Linux.x86_64

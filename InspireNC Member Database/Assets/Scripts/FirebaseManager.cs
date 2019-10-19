@@ -71,7 +71,7 @@ public class FirebaseManager : MonoBehaviour
 
         enableLoadingScreen();
         mainScreen.SetActive(false);
-        auth.SignInWithEmailAndPasswordAsync("default@inspirenc.us", "bUfFoONeRy").ContinueWith(task => 
+        auth.SignInWithEmailAndPasswordAsync("donotdelete@inspirenc.us", "TbRXffBJBGg3yqVaHFCdowZZG4Bv0MrobigcXaRrcIn3VxSVGq").ContinueWith(task => 
         {
             if (task.IsFaulted || task.IsCanceled)
             {
